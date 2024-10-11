@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import ToastProvider from "@/providers/toast-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +30,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ClerkProvider
+          signInFallbackRedirectUrl={
+            process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL
+          }
+        >
+          <ToastProvider />
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );
