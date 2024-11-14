@@ -1,6 +1,14 @@
 "use client";
 
-import { Home, DollarSign, Menu, X, FileText, Settings } from "lucide-react";
+import { UserButton } from "@clerk/nextjs";
+import {
+  Home,
+  DollarSign,
+  Menu,
+  X,
+  FileText,
+  CircleUserRound,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -26,9 +34,9 @@ const AsideNavBar = () => {
       icon: FileText,
     },
     {
-      path: "/setting",
-      name: "Setting",
-      icon: Settings,
+      path: "/account",
+      name: "Account",
+      icon: CircleUserRound,
     },
   ];
 
@@ -48,27 +56,29 @@ const AsideNavBar = () => {
           <div className="flex h-16 items-center justify-center">
             <h1 className="text-3xl font-bold">Extra</h1>
           </div>
-          <nav className="flex-1 overflow-y-auto">
+          <nav className="flex-1 space-y-2 overflow-y-auto">
             {routes.map((route) => {
               const Icon = route.icon;
               return (
-                <div key={route.path}>
-                  <Link
-                    href={route.path}
-                    className={`flex items-center gap-x-2 px-6 py-3 text-gray-700 hover:bg-gray-100 ${
-                      pathName === route.path ? "bg-gray-100 font-medium" : ""
-                    }`}
-                    onClick={() => {
-                      setNavOpen(false);
-                    }}
-                  >
-                    <Icon className={"h-4 w-4"} />
-                    {route.name}
-                  </Link>
-                </div>
+                <Link
+                  key={route.path}
+                  href={route.path}
+                  className={`flex items-center gap-x-2 rounded-lg px-6 py-3 text-gray-700 hover:bg-gray-100 ${
+                    pathName === route.path ? "bg-gray-100 font-medium" : ""
+                  }`}
+                  onClick={() => {
+                    setNavOpen(false);
+                  }}
+                >
+                  <Icon className={"h-4 w-4"} />
+                  {route.name}
+                </Link>
               );
             })}
           </nav>
+        </div>
+        <div className="">
+          <UserButton />
         </div>
       </aside>
     </>

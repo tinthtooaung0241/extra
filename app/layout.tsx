@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import ToastProvider from "@/providers/toast-provider";
+import ReactQueryProvider from "@/providers/react-query-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,8 +36,10 @@ export default function RootLayout({
             process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL
           }
         >
-          <ToastProvider />
-          {children}
+          <ReactQueryProvider>
+            <ToastProvider />
+            {children}
+          </ReactQueryProvider>
         </ClerkProvider>
       </body>
     </html>

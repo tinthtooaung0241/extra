@@ -7,6 +7,8 @@ import { z } from "zod";
 import { Expense } from "@/app/types/interfaces";
 import toast from "react-hot-toast";
 import { ChevronDown } from "lucide-react";
+import { fetchAccounts } from "@/app/api/accountApi";
+import { useQuery } from "@tanstack/react-query";
 
 interface ExpenseFormProps {
   onExpenseAdded: (income: Omit<Expense, "id">) => void;
@@ -31,6 +33,10 @@ const ExpenseForm = ({ onExpenseAdded, onClose }: ExpenseFormProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<ExpenseFormType>({ resolver: zodResolver(expenseFormSchema) });
+  const { data: accounts = [], isLoading } = useQuery({
+    queryKey: ["accounts"],
+    queryFn: fetchAccounts,
+  });
 
   const onSubmit = (data: ExpenseFormType) => {
     onExpenseAdded(data);
@@ -85,9 +91,11 @@ const ExpenseForm = ({ onExpenseAdded, onClose }: ExpenseFormProps) => {
                   <option value={""} disabled hidden>
                     Choose your account
                   </option>
-                  <option value={"efef"}>Tint Htoo Aung</option>
-                  <option>Tint Htoo Aung</option>
-                  <option>Tint Htoo Aung</option>
+                  {accounts.map((account) => (
+                    <option key={account.id} value={account.id}>
+                      {account.name}
+                    </option>
+                  ))}
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2" />
               </div>

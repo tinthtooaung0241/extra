@@ -16,4 +16,7 @@ export interface Expense {
 export interface Account {
   id: string;
   name: string;
+  expenses: Expense[]; // Add expenses field
+  createdAt: Date;
+  updatedAt: Date;
 }

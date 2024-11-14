@@ -1,4 +1,3 @@
-import { Account } from "@/app/types/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -11,7 +10,8 @@ const AccountFormSchema = z.object({
 type AccountFormType = z.infer<typeof AccountFormSchema>;
 
 interface AccountFormProps {
-  onAccountAdd: (accountData: Omit<Account, "id">) => void;
+  onAccountAdd: (accountData: { name: string }) => void;
+
   onClose: () => void;
 }
 

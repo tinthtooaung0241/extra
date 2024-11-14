@@ -49,6 +49,9 @@ export const GET = async (req: Request) => {
       where: {
         userId,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     const formattedExpenses = expenses.map((expense) => ({

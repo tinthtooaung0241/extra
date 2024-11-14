@@ -7,6 +7,12 @@ interface IncomeListProps {
 }
 
 const IncomeList = ({ incomes }: IncomeListProps) => {
+  if (incomes.length === 0)
+    return (
+      <div className="flex items-center justify-center">
+        <p>No income found.</p>
+      </div>
+    );
   return (
     <div className="space-y-4">
       {incomes.map((income) => (

@@ -1,8 +1,9 @@
 "use client";
 
-import { useIncomeStore } from "@/app/hooks/use-incomes";
+import { deleteIncome } from "@/app/api/incomeApi";
 import { Income } from "@/app/types/interfaces";
 import Tooltip from "@/components/ui/tooltip";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Calendar, DollarSign, MessageCircle, Trash } from "lucide-react";
 import Image from "next/image";
 import toast from "react-hot-toast";
@@ -12,7 +13,16 @@ interface IncomeProps {
 }
 
 const IncomeCard = ({ income }: IncomeProps) => {
-  const onDelete = useIncomeStore((state) => state.deleteIncome);
+  const queryClient = useQueryClient();
+  const deleteIncomeMutation = useMutation({
+    mutationFn: deleteIncome,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["incomes"] });
+    },
+    onError: (error) => {
+      console.error("Error deleting income:", error);
+    },
+  });
   return (
     <div className="flex items-center justify-between rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 shadow-md sm:px-6 sm:py-4">
       <div className="flex items-center gap-x-5">
@@ -48,8 +58,8 @@ const IncomeCard = ({ income }: IncomeProps) => {
         <button
           className="p-3"
           onClick={() => {
-            onDelete(income.id);
-            toast.success("Income deleted.");
+            deleteIncomeMutation.mutate(income.id);
+            toast.success(`${income.name} has been deleted.`);
           }}
         >
           <Trash size={25} />
