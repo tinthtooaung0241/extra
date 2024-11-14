@@ -3,11 +3,10 @@ import Card from "@/components/ui/card";
 import Heading from "@/components/ui/heading";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { fetchExpenses, lastFiveExpense } from "../api/expenseApi";
+import { fetchExpenses } from "../api/expenseApi";
 import { fetchIncomes } from "../api/incomeApi";
 import { Expense, Income } from "../types/interfaces";
 import ExpenseList from "./(routes)/expense/components/expense-list";
-import exp from "constants";
 import IncomeList from "./(routes)/income/components/income-list";
 
 const HomePage = () => {
