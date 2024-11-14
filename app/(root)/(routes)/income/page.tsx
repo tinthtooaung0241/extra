@@ -78,10 +78,7 @@ const IncomePage = () => {
           </p>
         </div>
       </div>
-      <IncomeList
-        incomes={incomes}
-        onDeleteIncome={(incomeId) => deleteIncomeMutation.mutate(incomeId)}
-      />
+      <IncomeList incomes={incomes} />
 
       <Modal isOpen={openModal} onClose={onCloseModal}>
         <IncomeForm
