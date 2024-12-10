@@ -1,6 +1,6 @@
 "use client";
 
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import {
   Home,
   DollarSign,
@@ -16,6 +16,7 @@ import { useState } from "react";
 const AsideNavBar = () => {
   const [navOpen, setNavOpen] = useState(false);
   const pathName = usePathname();
+  const { user } = useUser();
 
   const routes = [
     {
@@ -56,6 +57,10 @@ const AsideNavBar = () => {
           <div className="flex h-16 items-center justify-center">
             <h1 className="text-3xl font-bold">Extra</h1>
           </div>
+          <div className="mb-2 flex h-14 items-center justify-between gap-x-2 rounded-lg px-6 py-3 text-gray-700">
+            <div className="text-xl font-semibold">{user?.fullName}</div>
+            <UserButton />
+          </div>
           <nav className="flex-1 space-y-2 overflow-y-auto">
             {routes.map((route) => {
               const Icon = route.icon;
@@ -76,9 +81,6 @@ const AsideNavBar = () => {
               );
             })}
           </nav>
-        </div>
-        <div className="">
-          <UserButton />
         </div>
       </aside>
     </>

@@ -22,7 +22,7 @@ const expenseFormSchema = z.object({
     .max(255, "Income name must be 255 characters or less"),
   amount: z.coerce.number().positive(),
   note: z.string().max(255, "Note must be 255 characters or less").optional(),
-  accountId: z.string(),
+  accountId: z.string().min(1, "Account is required."),
 });
 
 type ExpenseFormType = z.infer<typeof expenseFormSchema>;
